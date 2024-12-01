@@ -15,6 +15,9 @@ import static spark.Spark.*;
 public class Main {
 
     public static void main(String... args) throws Exception {
+        port(9876);               // Using port 9876 for rate-limiting demo
+        ipAddress("0.0.0.0");
+
         var datasource = JdbcConnectionPool.create(
             "jdbc:h2:mem:natter", "natter", "password");
         var database = Database.forDataSource(datasource);
