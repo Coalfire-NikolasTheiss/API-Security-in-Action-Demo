@@ -10,12 +10,16 @@ public class Main {
 
 
   public static void main(String... args) throws Exception {
+  port(8080);               // Use port 8080 (or another open port)
+  ipAddress("0.0.0.0");     // Bind to all network interfaces (for external access)
   var datasource = JdbcConnectionPool.create(
 "jdbc:h2:mem:natter", "natter", "password"); var database = Database.forDataSource(datasource); createTables(database);
 var spaceController =
     new SpaceController(database);
 post("/spaces",
     spaceController::createSpace);
+get("/spaces/:spaceId",
+    spaceController::getSpace);
 after((request, response) -> {
   response.type("application/json");
 });
